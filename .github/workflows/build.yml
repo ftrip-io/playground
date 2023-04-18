@@ -22,7 +22,7 @@ jobs:
         working-directory: .
         shell: bash
         run: |
-          ls . -a
+          ls -R .
       - name: list
         working-directory: ftrip.io.playground
         shell: bash
