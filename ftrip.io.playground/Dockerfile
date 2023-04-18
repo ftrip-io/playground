@@ -3,11 +3,12 @@ WORKDIR /build
 
 # Copy everything
 COPY . .
+RUN MKDIR .nuget/packages
 
 RUN ls -R .
 
 # Build and publish a release
-RUN dotnet publish -c Release -o out
+RUN dotnet publish --source=/build/.nuget/packages -c Release -o out
  
 RUN ls /build/.nuget/packages
  
