@@ -3,7 +3,8 @@ module.exports = {
 	repositoryUrl: "https://github.com/ftrip-io/playground",
 	plugins: [
 		'@semantic-release/commit-analyzer',
-		'@semantic-release/release-notes-generator'
+		'@semantic-release/release-notes-generator',
+		'@semantic-release/github'
 	]
 }
 	
