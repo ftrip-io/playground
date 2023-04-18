@@ -25,7 +25,10 @@ jobs:
         run: |
           docker build -t ftrip.io.playground .
       - name: list
-        working-directory: ftrip.io.playground/ftrip.io.framework-playground
         shell: bash
         run: |
           ls . -a
+    - name: list
+        shell: bash
+        run: |
+          ls ./.nuget/packages -a
