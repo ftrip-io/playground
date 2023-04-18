@@ -3,7 +3,8 @@ WORKDIR /build
 
 # Copy everything
 COPY . .
-RUN MKDIR .nuget/packages
+RUN mkdir /build/.nuget
+RUN mkdir /build/.nuget/packages
 
 RUN ls -R .
 
