@@ -11,3 +11,8 @@ jobs:
         shell: bash
         run: |
           docker build -t ftrip.io.playground .
+      - name: list
+        working-directory: ftrip.io.playground
+        shell: bash
+        run: |
+          echo ls -a

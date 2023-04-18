@@ -3,6 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>ftrip.io.framework_playground</RootNamespace>
+	
+	<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+
   </PropertyGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
