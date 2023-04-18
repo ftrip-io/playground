@@ -12,7 +12,7 @@ jobs:
         run: |
           docker build -t ftrip.io.playground .
       - name: list
-        working-directory: ${{ github.workspace }}/
+        working-directory: ${{ github.workspace }}/ftrip.io.playground/ftrip.io.playground
         shell: bash
         run: |
           ls . -a
