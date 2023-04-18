@@ -12,6 +12,7 @@ jobs:
         run: |
           docker build -t ftrip.io.playground .
       - name: list
+        working-directory: ${{ github.workspace }}/
         shell: bash
         run: |
-          ls ~/.nuget
+          ls ./.nuget/packages
