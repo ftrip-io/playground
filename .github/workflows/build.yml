@@ -15,4 +15,4 @@ jobs:
         working-directory: ftrip.io.playground
         shell: bash
         run: |
-          echo ls -a
+          ls -a
