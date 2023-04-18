@@ -18,12 +18,21 @@ jobs:
         shell: bash
         run: |
           dotnet restore ftrip.io.playground/ftrip.io.playground.sln
-
-      - name: Build docker image
+      - name: list
+        working-directory: .
+        shell: bash
+        run: |
+          ls . -a
+      - name: list
         working-directory: ftrip.io.playground
         shell: bash
         run: |
-          docker build -t ftrip.io.playground .
+          ls . -a
+      # - name: Build docker image
+      #   working-directory: ftrip.io.playground
+      #   shell: bash
+      #   run: |
+      #     docker build -t ftrip.io.playground .
       - name: list
         shell: bash
         run: |
