@@ -5,7 +5,7 @@ WORKDIR /build
 COPY . .
 
 # Build and publish a release
-RUN dotnet publish --source=/build/.nuget/packages -c Release -o out
+RUN dotnet publish --source=/build/.nuget/packages --use-lock-file -c Release -o out
  
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine AS final
