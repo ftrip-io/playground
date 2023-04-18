@@ -7,14 +7,10 @@
 	<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(Configuration)'=='Release'">
+  <ItemGroup>
     <PackageReference Include="ftrip.io.framework" Version="1.0.0" />
     <PackageReference Include="ftrip.io.framework.messaging" Version="1.0.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)'=='Debug'">
-    <ProjectReference Include="..\..\..\framework\ftrip.io.framework\ftrip.io.framework.messaging\ftrip.io.framework.messaging.csproj" />
-    <ProjectReference Include="..\..\..\framework\ftrip.io.framework\ftrip.io.framework\ftrip.io.framework.csproj" />
-  </ItemGroup>
 
 </Project>
