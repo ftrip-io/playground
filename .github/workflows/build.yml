@@ -28,7 +28,7 @@ jobs:
         shell: bash
         run: |
           ls . -a
-    - name: list
-        shell: bash
-        run: |
-          ls ./.nuget/packages -a
+      - name: list
+          shell: bash
+          run: |
+            ls ./.nuget/packages -a
