@@ -14,7 +14,7 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
-      - uses: restore packages
+      - name: restore packages
         shell: bash
         run: |
           dotnet restore ftrip.io.playground/ftrip.io.playground.sln
