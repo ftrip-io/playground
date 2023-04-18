@@ -4,13 +4,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      NUGET_PACKAGES: ${{ github.workspace }}/ftrip.io.playground/.nuget/packages
+      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
     steps:
       - uses: actions/checkout@v2
 
       - uses: actions/cache@v3
         with:
-          path: ${{ github.workspace }}/ftrip.io.playground/.nuget/packages
+          path: ${{ github.workspace }}/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
@@ -31,7 +31,6 @@ jobs:
           docker build -t ftrip.io.playground .
 
       - name: list
-        working-directory: ftrip.io.playground
         shell: bash
         run: |
           ls ./.nuget/packages -a
