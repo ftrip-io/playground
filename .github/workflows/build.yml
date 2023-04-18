@@ -20,7 +20,7 @@ jobs:
         working-directory: ftrip.io.playground
         shell: bash
         run: |
-          dotnet restore /property:Configuration=Release --use-lock-file ftrip.io.playground.sln
+          dotnet restore /p:Configuration=Release ftrip.io.playground.sln
           
       - name: Build docker image
         working-directory: ftrip.io.playground
