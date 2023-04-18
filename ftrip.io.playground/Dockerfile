@@ -5,10 +5,11 @@ WORKDIR /build
 COPY . .
 
 # Build and publish a release
-RUN dotnet publish -c Release -o out
+RUN dotnet publish --no-restore -c Release -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine AS final
 WORKDIR /app
 COPY --from=build /build/out .
+
 ENTRYPOINT ["dotnet", "ftrip.io.framework-playground.dll"]
