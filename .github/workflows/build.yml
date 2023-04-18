@@ -1,0 +1,13 @@
+name: CI
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v2
+
+    - name: Build docker image
+      working-directory: ftrip.io.playground
+      shell: bash
+      run: |
+        docker build -t ftrip.io.playground .
