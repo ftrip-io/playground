@@ -4,8 +4,6 @@ WORKDIR /build
 # Copy everything
 COPY . .
 
-RUN ls -R .
-
 # Build and publish a release
 RUN dotnet publish --source=/build/.nuget/packages -c Release -o out
  
