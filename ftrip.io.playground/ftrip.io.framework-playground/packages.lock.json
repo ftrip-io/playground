@@ -2,15 +2,6 @@
   "version": 1,
   "dependencies": {
     ".NETCoreApp,Version=v3.1": {
-      "AWSSDK.SecurityToken": {
-        "type": "Direct",
-        "requested": "[3.7.100.14, )",
-        "resolved": "3.7.100.14",
-        "contentHash": "dGCVuVo0CFUKWW85W8YENO+aREf8sCBDjvGbnNvxJuNW4Ss+brEU9ltHhq2KfZze2VUNK1/wygbPG1bmbpyXEw==",
-        "dependencies": {
-          "AWSSDK.Core": "[3.7.100.14, 4.0.0)"
-        }
-      },
       "ftrip.io.framework": {
         "type": "Direct",
         "requested": "[1.0.0, )",
@@ -105,6 +96,14 @@
         "type": "Transitive",
         "resolved": "3.7.100.14",
         "contentHash": "gnEgxBlk4PFEfdPE8Lkf4+D16MZFYSaW7/o6Wwe5e035QWUkTJX0Dn4LfTCdV5QSEL/fOFxu+yCAm55eIIBgog=="
+      },
+      "AWSSDK.SecurityToken": {
+        "type": "Transitive",
+        "resolved": "3.7.100.14",
+        "contentHash": "dGCVuVo0CFUKWW85W8YENO+aREf8sCBDjvGbnNvxJuNW4Ss+brEU9ltHhq2KfZze2VUNK1/wygbPG1bmbpyXEw==",
+        "dependencies": {
+          "AWSSDK.Core": "[3.7.100.14, 4.0.0)"
+        }
       },
       "DnsClient": {
         "type": "Transitive",
@@ -778,7 +777,6 @@
       "ftrip.io.framework-playground.contracts": {
         "type": "Project",
         "dependencies": {
-          "AWSSDK.SecurityToken": "3.7.100.14",
           "ftrip.io.framework": "1.0.0",
           "ftrip.io.framework.messaging": "1.0.0"
         }

@@ -10,9 +10,6 @@
   <ItemGroup Condition="'$(Configuration)'=='Release'">
     <PackageReference Include="ftrip.io.framework" Version="1.0.0" />
     <PackageReference Include="ftrip.io.framework.messaging" Version="1.0.0" />
-	
-	<PackageReference Include="AWSSDK.SecurityToken" Version="3.7.100.14" />
-
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Debug'">
