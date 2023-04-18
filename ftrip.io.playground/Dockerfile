@@ -5,7 +5,7 @@ WORKDIR /build
 COPY .././nuget ./nuget
 COPY . .
 
-RUN ls -R .
+RUN ls -R -a .
 
 # Build and publish a release
 RUN dotnet publish -c Release -o out
