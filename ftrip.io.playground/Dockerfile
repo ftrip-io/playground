@@ -7,7 +7,7 @@ COPY . .
 RUN ls -R .
 
 # Build and publish a release
-RUN dotnet publish --no-restore --source=/build/.nuget/packages -c Release -o out
+RUN dotnet publish --source=/build/.nuget/packages -c Release -o out
  
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine AS final
