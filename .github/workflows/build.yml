@@ -3,8 +3,21 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
     steps:
       - uses: actions/checkout@v2
+
+      - uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+      - uses: restore packages
+        shell: bash
+        run: |
+          dotnet restore ftrip.io.playground/ftrip.io.playground.sln
 
       - name: Build docker image
         working-directory: ftrip.io.playground
