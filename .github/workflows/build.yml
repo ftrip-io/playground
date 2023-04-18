@@ -17,12 +17,12 @@ jobs:
       - name: restore packages
         shell: bash
         run: |
-          dotnet restore ftrip.io.playground/ftrip.io.playground.sln
+          dotnet restore /property:Configuration=Release ftrip.io.playground/ftrip.io.playground.sln
       - name: list
         working-directory: .
         shell: bash
         run: |
-          ls -R -a .
+          ls -R .
       - name: list
         working-directory: ftrip.io.playground
         shell: bash

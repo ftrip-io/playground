@@ -8,7 +8,7 @@
 
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(Configuration)'=='Release'">
     <PackageReference Include="ftrip.io.framework" Version="1.0.0" />
     <PackageReference Include="ftrip.io.framework.auth" Version="1.0.0" />
     <PackageReference Include="ftrip.io.framework.jobs" Version="1.0.0" />
@@ -23,6 +23,13 @@
   </ItemGroup>
 
 
+  <ItemGroup Condition="'$(Configuration)'=='Debug'">
+    <ProjectReference Include="..\..\..\framework\ftrip.io.framework\ftrip.io.framework.messaging\ftrip.io.framework.messaging.csproj" />
+    <ProjectReference Include="..\..\..\framework\ftrip.io.framework\ftrip.io.framework.auth\ftrip.io.framework.auth.csproj" />
+    <ProjectReference Include="..\..\..\framework\ftrip.io.framework\ftrip.io.framework.jobs\ftrip.io.framework.jobs.csproj" />
+    <ProjectReference Include="..\..\..\framework\ftrip.io.framework\ftrip.io.framework\ftrip.io.framework.csproj" />
+  </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\ftrip.io.framework-playground.contracts\ftrip.io.framework-playground.contracts.csproj" />
   </ItemGroup>
