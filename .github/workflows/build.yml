@@ -17,26 +17,19 @@ jobs:
       - name: restore packages
         shell: bash
         run: |
-          dotnet restore /property:Configuration=Release /p:DisableImplicitNuGetFallbackFolder=true ftrip.io.playground/ftrip.io.playground.sln
+          dotnet restore /property:Configuration=Release ftrip.io.playground/ftrip.io.playground.sln
       - name: list
         working-directory: .
         shell: bash
         run: |
           ls -R .
-      - name: list
-        working-directory: ftrip.io.playground
-        shell: bash
-        run: |
-          ls . -a
+          
       - name: Build docker image
         working-directory: ftrip.io.playground
         shell: bash
         run: |
           docker build -t ftrip.io.playground .
-      - name: list
-        shell: bash
-        run: |
-          ls . -a
+
       - name: list
         shell: bash
         run: |
