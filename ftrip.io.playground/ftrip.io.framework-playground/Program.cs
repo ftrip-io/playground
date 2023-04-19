@@ -1,3 +1,5 @@
+using ftrip.io.framework.Persistence.Sql.Migrations;
+using ftrip.io.framework_playground.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -9,7 +11,7 @@ namespace ftrip.io.framework_playground
         {
             CreateHostBuilder(args)
                 .Build()
-                //.MigrateDbContext<DatabaseContext>()
+                .MigrateDbContext<DatabaseContext>()
                 .Run();
         }
 
