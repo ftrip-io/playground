@@ -76,7 +76,7 @@ namespace ftrip.io.framework_playground
                 endpoints.MapControllers();
             });
 
-            app.UseFtripioSwagger(Configuration.GetSection(nameof(SwaggerSettings)).Get<SwaggerSettings>());
+            app.UseFtripioSwagger(Configuration.GetSection(nameof(SwaggerUISettings)).Get<SwaggerUISettings>());
         }
     }
 }
