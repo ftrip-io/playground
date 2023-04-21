@@ -11,7 +11,7 @@ namespace ftrip.io.framework_playground
         {
             CreateHostBuilder(args)
                 .Build()
-                .MigrateDbContext<DatabaseContext>()
+                //.MigrateDbContext<DatabaseContext>()
                 .Run();
         }
 

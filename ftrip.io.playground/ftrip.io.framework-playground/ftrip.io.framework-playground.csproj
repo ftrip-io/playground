@@ -4,15 +4,14 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>ftrip.io.framework_playground</RootNamespace>
 	
-	<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-
+	  <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="ftrip.io.framework" Version="2.0.0" />
-    <PackageReference Include="ftrip.io.framework.auth" Version="2.0.0" />
-    <PackageReference Include="ftrip.io.framework.jobs" Version="2.0.0" />
-    <PackageReference Include="ftrip.io.framework.messaging" Version="2.0.0" />
+    <PackageReference Include="ftrip.io.framework" Version="2.1.0" />
+    <PackageReference Include="ftrip.io.framework.auth" Version="2.1.0" />
+    <PackageReference Include="ftrip.io.framework.jobs" Version="2.1.0" />
+    <PackageReference Include="ftrip.io.framework.messaging" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
