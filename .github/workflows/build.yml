@@ -14,17 +14,25 @@ jobs:
       CONFIGURATION: Release
 
     steps:
+      - uses: actions/checkout@v3
+
       - name: Setup .NET Core 3.1
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 3.1
 
+      - name: Cache .NET ReportGenerator
+        id: cache-dotnet-reportgenerator
+        uses: actions/cache@v3
+        with:
+          path: ./.tools/reportgenerator
+          key: ${{ runner.os }}-dotnet-reportgenerator
+
       - name: Install .NET ReportGenerator
+        if: steps.cache-dotnet-reportgenerator.outputs.cache-hit != 'true'
         shell: bash
         run: |
-          dotnet tool install --global dotnet-reportgenerator-globaltool
-
-      - uses: actions/checkout@v3
+          dotnet tool install --global dotnet-reportgenerator-globaltool --tool-path ./.tools/reportgenerator
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
@@ -46,12 +54,12 @@ jobs:
           mkdir -p ./.sonar/scanner
           dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner
 
-      - uses: actions/cache@v3
-        with:
-          path: ${{ env.NUGET_PACKAGES }}
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
+      # - uses: actions/cache@v3
+      #   with:
+      #     path: ${{ env.NUGET_PACKAGES }}
+      #     key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-nuget-
 
       - name: Restore dependencies
         shell: bash
