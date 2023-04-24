@@ -36,11 +36,10 @@ jobs:
           zip -r out.zip ./out
 
       - name: upload out artifact
-        working-directory: ftrip.io.playground
         uses: actions/upload-artifact@v3
         with:
           name: out
-          path: out
+          path: ftrip.io.playground/out
 
       # - name: Build docker image
       #   working-directory: ftrip.io.playground
