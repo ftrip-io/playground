@@ -21,5 +21,15 @@ namespace ftrip.io.framework_playground.WeatherForecasts.UseCases.ReadWeatherFor
                 TemperatureC = 20
             });
         }
+
+        public Task<WeatherForecast> Handle2(ReadWeatherForecastRequest request, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(new WeatherForecast()
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                TemperatureC = 20
+            });
+        }
     }
 }
