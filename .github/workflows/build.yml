@@ -33,7 +33,7 @@ jobs:
       - name: Set installed/cached dotnet path [${{ env.DOTNET_INSTALL_DIR }}]
         run: |
           export PATH=${{env.GITHUB_PATH}}:"${{ env.DOTNET_INSTALL_DIR }}"
-          echo $PATH
+          echo $GITHUB_PATH
 
       - name: Cache .NET ReportGenerator
         id: cache-dotnet-reportgenerator
