@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NUGET_PACKAGES: ${{ github.workspace }}/ftrip.io.playground/.nuget/packages
-    
+
     steps:
       - uses: actions/checkout@v2
 
@@ -21,9 +21,16 @@ jobs:
         shell: bash
         run: |
           dotnet restore /p:Configuration=Release ftrip.io.playground.sln
-          
-      - name: Build docker image
+
+      - name: publich app
         working-directory: ftrip.io.playground
         shell: bash
         run: |
-          docker build -t ftrip.io.playground .
+          dotnet publish --no-restore -c Release -o out
+          # dotnet publish --source=.nuget/packages -c Release -o out
+
+      # - name: Build docker image
+      #   working-directory: ftrip.io.playground
+      #   shell: bash
+      #   run: |
+      #     docker build -t ftrip.io.playground .

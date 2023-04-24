@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.33529.622
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ftrip.io.framework-playground", "ftrip.io.framework-playground\ftrip.io.framework-playground.csproj", "{DED7768E-2C55-4041-AF0B-7F2441F336E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ftrip.io.framework-playground.contracts", "ftrip.io.framework-playground.contracts\ftrip.io.framework-playground.contracts.csproj", "{1A73C294-47AC-4D9A-8846-E7A9BB60124A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ftrip.io.framework-playground.contracts", "ftrip.io.framework-playground.contracts\ftrip.io.framework-playground.contracts.csproj", "{1A73C294-47AC-4D9A-8846-E7A9BB60124A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ftrip.io.framework-playground.unit-tests", "ftrip.io.framework-playground.unit-tests\ftrip.io.framework-playground.unit-tests.csproj", "{37D14EDB-CA2F-49CD-8788-4C49BEC59B4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{1A73C294-47AC-4D9A-8846-E7A9BB60124A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A73C294-47AC-4D9A-8846-E7A9BB60124A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A73C294-47AC-4D9A-8846-E7A9BB60124A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37D14EDB-CA2F-49CD-8788-4C49BEC59B4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37D14EDB-CA2F-49CD-8788-4C49BEC59B4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37D14EDB-CA2F-49CD-8788-4C49BEC59B4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37D14EDB-CA2F-49CD-8788-4C49BEC59B4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
