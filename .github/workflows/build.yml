@@ -62,7 +62,7 @@ jobs:
         shell: bash
         run: |
           ./.sonar/scanner/dotnet-sonarscanner begin /k:"ftrip-io_playground" /o:"ftrip-io" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet test ftrip.io.framework-playground.unit-tests/ftrip.io.framework-playground.unit-tests.csproj --no-restore -c Release
+          dotnet test ftrip.io.playground/ftrip.io.framework-playground.unit-tests/ftrip.io.framework-playground.unit-tests.csproj --no-restore -c Release
           dotnet publish ftrip.io.playground/ftrip.io.framework-playground/ftrip.io.framework-playground.csproj --no-restore -c Release -o out
           ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
