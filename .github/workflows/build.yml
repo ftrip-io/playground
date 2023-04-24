@@ -75,7 +75,7 @@ jobs:
           dotnet publish ftrip.io.playground/ftrip.io.framework-playground/ftrip.io.framework-playground.csproj --no-restore -c Release -o out
           dotnet test ftrip.io.playground/ftrip.io.framework-playground.unit-tests/ftrip.io.framework-playground.unit-tests.csproj --collect:"XPlat Code Coverage" --results-directory TestResults/ --logger "trx;LogFileName=unittests.trx" -c Release -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
 
-          reportgenerator -reports:*/coverage.opencover.xml -targetdir:coverage -reporttypes:Html
+          reportgenerator -reports:TestResults/**/coverage.opencover.xml -targetdir:coverage -reporttypes:Html
 
           ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
