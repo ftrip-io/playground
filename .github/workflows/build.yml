@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NUGET_PACKAGES: ${{ github.workspace }}/ftrip.io.playground/.nuget/packages
-      DOTNET_INSTALL_DIR: .\.dotnet
+      DOTNET_INSTALL_DIR: ./.dotnet
       CONFIGURATION: Release
 
     steps:
@@ -32,7 +32,7 @@ jobs:
 
       - name: Set installed/cached dotnet path [${{ env.DOTNET_INSTALL_DIR }}]
         run: |
-          export PATH=$ENV:GITHUB_PATH:"${{ env.DOTNET_INSTALL_DIR }}"
+          export PATH=${{env.GITHUB_PATH}}:"${{ env.DOTNET_INSTALL_DIR }}"
           echo $PATH
 
       - name: Cache .NET ReportGenerator
