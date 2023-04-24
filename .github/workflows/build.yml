@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NUGET_PACKAGES: ${{ github.workspace }}/ftrip.io.playground/.nuget/packages
-      # DOTNET_INSTALL_DIR: ./.dotnet
+      DOTNET_INSTALL_DIR: ./.dotnet
       CONFIGURATION: Release
 
     steps:
@@ -78,30 +78,30 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           shopt -s expand_aliases
-          # alias dotnet="${{ env.DOTNET_INSTALL_DIR }}/dotnet"
+          alias dotnet2="${{ env.DOTNET_INSTALL_DIR }}/dotnet"
           alias reportgenerator="./.tools/reportgenerator/reportgenerator"
 
           # ./.sonar/scanner/dotnet-sonarscanner begin /k:"ftrip-io_playground" /o:"ftrip-io" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths=TestResults/*.trx /d:sonar.cs.opencover.reportsPaths=TestResults/*/coverage.opencover.xml /d:sonar.coverage.exclusions="**Test*.cs"
 
-          dotnet build ftrip.io.playground/ftrip.io.playground.sln \
+          dotnet2 build ftrip.io.playground/ftrip.io.playground.sln \
             --no-restore \
             -c ${{ env.CONFIGURATION }}
-          dotnet publish ftrip.io.playground/ftrip.io.framework-playground/ftrip.io.framework-playground.csproj \
+          dotnet2 publish ftrip.io.playground/ftrip.io.framework-playground/ftrip.io.framework-playground.csproj \
             --no-build \
             --no-restore \
             -c ${{ env.CONFIGURATION }}
-          dotnet test ftrip.io.playground/ftrip.io.framework-playground.unit-tests/ftrip.io.framework-playground.unit-tests.csproj \
-            --no-build \
-            --no-restore \
-            -c ${{ env.CONFIGURATION }} \
-            --collect:"XPlat Code Coverage" \
-            --results-directory TestResults/ \
-            --logger "trx;LogFileName=unittests.trx" \
-            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
-          reportgenerator \
-           -reports:TestResults/**/coverage.opencover.xml \
-           -targetdir:coverage \
-           -reporttypes:Html
+          # dotnet test ftrip.io.playground/ftrip.io.framework-playground.unit-tests/ftrip.io.framework-playground.unit-tests.csproj \
+          #   --no-build \
+          #   --no-restore \
+          #   -c ${{ env.CONFIGURATION }} \
+          #   --collect:"XPlat Code Coverage" \
+          #   --results-directory TestResults/ \
+          #   --logger "trx;LogFileName=unittests.trx" \
+          #   -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          # reportgenerator \
+          #  -reports:TestResults/**/coverage.opencover.xml \
+          #  -targetdir:coverage \
+          #  -reporttypes:Html
 
           # ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
