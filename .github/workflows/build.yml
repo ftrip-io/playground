@@ -36,6 +36,7 @@ jobs:
       - name: Set installed/cached dotnet path [${{ env.DOTNET_INSTALL_DIR }}]
         run: |
           export GITHUB_PATH=$GITHUB_PATH:${{env.DOTNET_INSTALL_DIR}}
+          export PATH=$PATH:${{env.DOTNET_INSTALL_DIR}}
           echo $GITHUB_PATH
 
       - name: Check default dotnet version2
