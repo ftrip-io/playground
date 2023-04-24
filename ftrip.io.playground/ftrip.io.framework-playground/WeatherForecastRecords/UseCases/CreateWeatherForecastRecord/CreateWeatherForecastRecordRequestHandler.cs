@@ -31,6 +31,7 @@ namespace ftrip.io.framework_playground.WeatherForecastRecords.UseCases.CreateWe
             var m = 5;
             var u = 5;
             var z = 5;
+            var nj = 10;
 
             return await _repository.Create(weatherForecast, cancellationToken);
         }
