@@ -60,7 +60,7 @@ jobs:
           ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
       # - name: publich app
-      #   working-directory: ftrip.io.playground
+      #   working-directory: ftrip.io.playground2
       #   shell: bash
       #   run: |
       #     # dotnet publish --source=.nuget/packages -c Release -o out
