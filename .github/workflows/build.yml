@@ -11,23 +11,18 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NUGET_PACKAGES: ${{ github.workspace }}/ftrip.io.playground/.nuget/packages
+      CONFIGURATION: Release
 
     steps:
-      - name: Setup .NET Core
+      - name: Setup .NET Core 3.1
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 3.1
+
+      - name: Install .NET ReportGenerator
         shell: bash
         run: |
           dotnet tool install --global dotnet-reportgenerator-globaltool
-
-      # - name: Setup dotcover
-      #   uses: actions/setup-dotnet@v3
-      #   with:
-      #     dotnet-version: 3.1
-
-      # - name: Set up JDK 11
-      #   uses: actions/setup-java@v3
-      #   with:
-      #     java-version: 11
-      #     distribution: "zulu" # Alternative distribution options are available.
 
       - uses: actions/checkout@v3
 
@@ -36,7 +31,6 @@ jobs:
         with:
           path: ~/sonar/cache
           key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
 
       - name: Cache SonarCloud scanner
         id: cache-sonar-scanner
@@ -44,7 +38,6 @@ jobs:
         with:
           path: ./.sonar/scanner
           key: ${{ runner.os }}-sonar-scanner
-          restore-keys: ${{ runner.os }}-sonar-scanner
 
       - name: Install SonarCloud scanner
         if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
@@ -60,23 +53,34 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
-      - name: restore packages
-        working-directory: ftrip.io.playground
+      - name: Restore dependencies
         shell: bash
         run: |
-          dotnet restore /p:Configuration=Release ftrip.io.playground.sln
+          dotnet restore /p:Configuration=$CONFIGURATION ftrip.io.playground/ftrip.io.playground.sln
 
-      - name: Build and analyze
+      - name: Build, Analyze and Generate Code Coverage
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: bash
         run: |
           ./.sonar/scanner/dotnet-sonarscanner begin /k:"ftrip-io_playground" /o:"ftrip-io" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths=TestResults/*.trx /d:sonar.cs.opencover.reportsPaths=TestResults/*/coverage.opencover.xml /d:sonar.coverage.exclusions="**Test*.cs"
-          dotnet publish ftrip.io.playground/ftrip.io.framework-playground/ftrip.io.framework-playground.csproj --no-restore -c Release -o out
-          dotnet test ftrip.io.playground/ftrip.io.framework-playground.unit-tests/ftrip.io.framework-playground.unit-tests.csproj --collect:"XPlat Code Coverage" --results-directory TestResults/ --logger "trx;LogFileName=unittests.trx" -c Release -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
 
-          reportgenerator -reports:TestResults/**/coverage.opencover.xml -targetdir:coverage -reporttypes:Html
+          dotnet publish ftrip.io.playground/ftrip.io.framework-playground/ftrip.io.framework-playground.csproj \
+            -c $CONFIGURATION
+            --no-restore \
+          dotnet test ftrip.io.playground/ftrip.io.framework-playground.unit-tests/ftrip.io.framework-playground.unit-tests.csproj \
+            -c $CONFIGURATION \
+            --no-restore \
+            --no-build \
+            --collect:"XPlat Code Coverage" \
+            --results-directory TestResults/ \
+            --logger "trx;LogFileName=unittests.trx" \
+            --DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          reportgenerator \
+           -reports:TestResults/**/coverage.opencover.xml \
+           -targetdir:coverage \
+           -reporttypes:Html
 
           ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
@@ -86,19 +90,8 @@ jobs:
           files: |
             TestResults/**/*.trx
 
-      # - name: zip out
-      #   shell: bash
-      #   run: |
-      #     zip -r coverage.zip ./coverage
-
-      - name: upload out artifact
+      - name: Upload Code Coverage artifact
         uses: actions/upload-artifact@v3
         with:
-          name: code-coverage
+          name: Code Coverage
           path: coverage
-
-      # - name: Build docker image
-      #   working-directory: ftrip.io.playground
-      #   shell: bash
-      #   run: |
-      #     docker build -t ftrip.io.playground .
