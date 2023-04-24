@@ -81,19 +81,20 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           shopt -s expand_aliases
-          alias dotnet2="${{ env.DOTNET_INSTALL_DIR }}/dotnet"
+          alias dotnet3="${{ env.DOTNET_INSTALL_DIR }}/dotnet"
           alias reportgenerator="./.tools/reportgenerator/reportgenerator"
+          alias sonarscanner="./.sonar/scanner/dotnet-sonarscanner"
 
-          # ./.sonar/scanner/dotnet-sonarscanner begin /k:"ftrip-io_playground" /o:"ftrip-io" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths=TestResults/*.trx /d:sonar.cs.opencover.reportsPaths=TestResults/*/coverage.opencover.xml /d:sonar.coverage.exclusions="**Test*.cs"
+          sonarscanner begin /k:"ftrip-io_playground" /o:"ftrip-io" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths=TestResults/*.trx /d:sonar.cs.opencover.reportsPaths=TestResults/*/coverage.opencover.xml /d:sonar.coverage.exclusions="**Test*.cs"
 
-          dotnet2 build ftrip.io.playground/ftrip.io.playground.sln \
+          dotnet3 build ftrip.io.playground/ftrip.io.playground.sln \
             --no-restore \
             -c ${{ env.CONFIGURATION }}
-          dotnet2 publish ftrip.io.playground/ftrip.io.framework-playground/ftrip.io.framework-playground.csproj \
+          dotnet3 publish ftrip.io.playground/ftrip.io.framework-playground/ftrip.io.framework-playground.csproj \
             --no-build \
             --no-restore \
             -c ${{ env.CONFIGURATION }}
-          dotnet2 test ftrip.io.playground/ftrip.io.framework-playground.unit-tests/ftrip.io.framework-playground.unit-tests.csproj \
+          dotnet3 test ftrip.io.playground/ftrip.io.framework-playground.unit-tests/ftrip.io.framework-playground.unit-tests.csproj \
             --no-build \
             --no-restore \
             -c ${{ env.CONFIGURATION }} \
@@ -106,7 +107,7 @@ jobs:
            -targetdir:code-coverage \
            -reporttypes:Html
 
-          # ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+          sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action/composite@v2
