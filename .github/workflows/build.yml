@@ -14,6 +14,11 @@ jobs:
 
     steps:
       - name: Setup .NET Core
+        shell: bash
+        run: |
+          dotnet tool install --global JetBrains.dotCover.GlobalTool
+
+      - name: Setup dotcover
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 3.1
@@ -66,9 +71,9 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: bash
         run: |
-          ./.sonar/scanner/dotnet-sonarscanner begin /k:"ftrip-io_playground" /o:"ftrip-io" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths=TestResults/*.trx /d:sonar.cs.opencover.reportsPaths=TestResults/*/coverage.opencover.xml /d:sonar.coverage.exclusions="**Test*.cs"
+          ./.sonar/scanner/dotnet-sonarscanner begin /k:"ftrip-io_playground" /o:"ftrip-io" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths=TestResults/*.trx /d:sonar.cs.opencover.reportsPaths=TestResults/*/coverage.opencover.xml /d:sonar.coverage.exclusions="**Test*.cs" /d:sonar.cs.dotcover.reportsPaths=coverage/dotCover.Output.html
           # dotnet publish ftrip.io.playground/ftrip.io.framework-playground/ftrip.io.framework-playground.csproj --no-restore -c Release -o out
-          dotnet test ftrip.io.playground/ftrip.io.framework-playground.unit-tests/ftrip.io.framework-playground.unit-tests.csproj --collect:"XPlat Code Coverage" --results-directory TestResults/ --logger "trx;LogFileName=unittests.trx" -c Release -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          dotnet dotcover test ftrip.io.playground/ftrip.io.framework-playground.unit-tests/ftrip.io.framework-playground.unit-tests.csproj --collect:"XPlat Code Coverage" --results-directory TestResults/ --logger "trx;LogFileName=unittests.trx" -c Release -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover --dcReportType=HTML
           ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
       - name: Publish Test Results
@@ -84,16 +89,16 @@ jobs:
       #   run: |
       #     # dotnet publish --source=.nuget/packages -c Release -o out
 
-      # - name: zip out
-      #   shell: bash
-      #   run: |
-      #     zip -r out.zip ./out
+      - name: zip out
+        shell: bash
+        run: |
+          zip -r coverage.zip ./coverage
 
-      # - name: upload out artifact
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: out
-      #     path: out.zip
+      - name: upload out artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage
+          path: coverage.zip
 
       # - name: Build docker image
       #   working-directory: ftrip.io.playground
