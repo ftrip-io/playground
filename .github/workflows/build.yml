@@ -101,10 +101,10 @@ jobs:
             --results-directory TestResults/ \
             --logger "trx;LogFileName=unittests.trx" \
             -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
-          # reportgenerator \
-          #  -reports:TestResults/**/coverage.opencover.xml \
-          #  -targetdir:coverage \
-          #  -reporttypes:Html
+          reportgenerator \
+           -reports:TestResults/**/coverage.opencover.xml \
+           -targetdir:coverage \
+           -reporttypes:Html
 
           # ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
