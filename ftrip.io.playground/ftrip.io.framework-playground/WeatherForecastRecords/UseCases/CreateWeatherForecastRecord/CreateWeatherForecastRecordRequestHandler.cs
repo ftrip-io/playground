@@ -23,7 +23,7 @@ namespace ftrip.io.framework_playground.WeatherForecastRecords.UseCases.CreateWe
         public async Task<WeatherForecastRecord> Handle(CreateWeatherForecastRecordRequest request, CancellationToken cancellationToken)
         {
             var weatherForecast = _mapper.Map<WeatherForecastRecord>(request);
-
+            var x = 5;
             if (weatherForecast.Date < System.DateTime.MinValue.AddDays(100))
             {
                 weatherForecast.Date = new System.DateTime();
