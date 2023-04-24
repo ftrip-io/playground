@@ -32,7 +32,12 @@ jobs:
         if: steps.cache-dotnet-reportgenerator.outputs.cache-hit != 'true'
         shell: bash
         run: |
-          dotnet tool install --global dotnet-reportgenerator-globaltool --tool-path ./.tools/reportgenerator
+          dotnet tool install dotnet-reportgenerator-globaltool --tool-path ./.tools/reportgenerator
+
+      - name: latest
+        shell: bash
+        run: |
+          ls ./.tools/reportgenerator
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
@@ -89,7 +94,7 @@ jobs:
             --results-directory TestResults/ \
             --logger "trx;LogFileName=unittests.trx" \
             -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
-          reportgenerator \
+          ./.tools/reportgenerator/reportgenerator \
            -reports:TestResults/**/coverage.opencover.xml \
            -targetdir:coverage \
            -reporttypes:Html
