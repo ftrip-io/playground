@@ -90,14 +90,14 @@ jobs:
             --no-build \
             --no-restore \
             -c ${{ env.CONFIGURATION }}
-          # dotnet test ftrip.io.playground/ftrip.io.framework-playground.unit-tests/ftrip.io.framework-playground.unit-tests.csproj \
-          #   --no-build \
-          #   --no-restore \
-          #   -c ${{ env.CONFIGURATION }} \
-          #   --collect:"XPlat Code Coverage" \
-          #   --results-directory TestResults/ \
-          #   --logger "trx;LogFileName=unittests.trx" \
-          #   -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          ${{ env.DOTNET_INSTALL_DIR }}/dotnet test ftrip.io.playground/ftrip.io.framework-playground.unit-tests/ftrip.io.framework-playground.unit-tests.csproj \
+            --no-build \
+            --no-restore \
+            -c ${{ env.CONFIGURATION }} \
+            --collect:"XPlat Code Coverage" \
+            --results-directory TestResults/ \
+            --logger "trx;LogFileName=unittests.trx" \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           # reportgenerator \
           #  -reports:TestResults/**/coverage.opencover.xml \
           #  -targetdir:coverage \
