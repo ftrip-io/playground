@@ -50,6 +50,7 @@ jobs:
           dotnet restore /p:Configuration=Release ftrip.io.playground.sln
 
       - name: Build and analyze
+        working-directory: ftrip.io.playground
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
