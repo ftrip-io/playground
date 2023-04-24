@@ -66,7 +66,6 @@ jobs:
       #     # dotnet publish --source=.nuget/packages -c Release -o out
 
       - name: zip out
-        working-directory: ftrip.io.playground
         shell: bash
         run: |
           zip -r out.zip ./out
