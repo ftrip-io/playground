@@ -47,6 +47,11 @@ jobs:
       #     echo $GITHUB_PATH
       #     echo $PATH
 
+      - name: Setup Aliases
+        run: |
+          echo "List the aliases"
+          alias
+
       - name: Check default dotnet version2
         run: dotnet2 --version
 
