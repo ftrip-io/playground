@@ -17,9 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Check default dotnet version
-        run: dotnet --version
-
       - name: Cache .NET 3.1
         id: cache-dotnet
         uses: actions/cache@v3
@@ -32,28 +29,6 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 3.1
-
-      - name: Setup Aliases
-        run: |
-          shopt -s expand_aliases
-          alias dotnet2="${{ env.DOTNET_INSTALL_DIR }}/dotnet"
-          echo "List the aliases"
-          alias
-
-      # - name: Set installed/cached dotnet path [${{ env.DOTNET_INSTALL_DIR }}]
-      #   run: |
-      #     export GITHUB_PATH=${{env.DOTNET_INSTALL_DIR}}:$GITHUB_PATH
-      #     export PATH=${{env.DOTNET_INSTALL_DIR}}:$PATH
-      #     echo $GITHUB_PATH
-      #     echo $PATH
-
-      - name: Setup Aliases
-        run: |
-          echo "List the aliases"
-          alias
-
-      - name: Check default dotnet version2
-        run: dotnet2 --version
 
       - name: Cache .NET ReportGenerator
         id: cache-dotnet-reportgenerator
@@ -103,18 +78,18 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           shopt -s expand_aliases
-          alias stork="./stork"
+          alias dotnet2="${{ env.DOTNET_INSTALL_DIR }}/dotnet"
 
           # ./.sonar/scanner/dotnet-sonarscanner begin /k:"ftrip-io_playground" /o:"ftrip-io" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths=TestResults/*.trx /d:sonar.cs.opencover.reportsPaths=TestResults/*/coverage.opencover.xml /d:sonar.coverage.exclusions="**Test*.cs"
 
-          dotnet build ftrip.io.playground/ftrip.io.playground.sln \
+          dotnet2 build ftrip.io.playground/ftrip.io.playground.sln \
             --no-restore \
             -c ${{ env.CONFIGURATION }}
-          dotnet publish ftrip.io.playground/ftrip.io.framework-playground/ftrip.io.framework-playground.csproj \
+          dotnet2 publish ftrip.io.playground/ftrip.io.framework-playground/ftrip.io.framework-playground.csproj \
             --no-build \
             --no-restore \
             -c ${{ env.CONFIGURATION }}
-          dotnet test ftrip.io.playground/ftrip.io.framework-playground.unit-tests/ftrip.io.framework-playground.unit-tests.csproj \
+          dotnet2 test ftrip.io.playground/ftrip.io.framework-playground.unit-tests/ftrip.io.framework-playground.unit-tests.csproj \
             --no-build \
             --no-restore \
             -c ${{ env.CONFIGURATION }} \
