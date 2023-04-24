@@ -28,6 +28,9 @@ namespace ftrip.io.framework_playground.WeatherForecastRecords.UseCases.CreateWe
             {
                 weatherForecast.Date = new System.DateTime();
             }
+            var x = 5;
+            var u = 5;
+            var z = 5;
 
             return await _repository.Create(weatherForecast, cancellationToken);
         }
