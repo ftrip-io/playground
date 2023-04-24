@@ -103,7 +103,7 @@ jobs:
             -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           reportgenerator \
            -reports:TestResults/**/coverage.opencover.xml \
-           -targetdir:coverage \
+           -targetdir:code-coverage \
            -reporttypes:Html
 
           # ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
@@ -118,4 +118,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Code Coverage
-          path: coverage
+          path: code-coverage
