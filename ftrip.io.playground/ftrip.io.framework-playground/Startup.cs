@@ -9,6 +9,7 @@ using ftrip.io.framework.jobs.Installers;
 using ftrip.io.framework.Mapping;
 using ftrip.io.framework.messaging.Installers;
 using ftrip.io.framework.Persistence.NoSql.Mongodb.Installers;
+using ftrip.io.framework.Secrets;
 using ftrip.io.framework.Swagger;
 using ftrip.io.framework.Validation;
 using Microsoft.AspNetCore.Builder;
@@ -40,6 +41,7 @@ namespace ftrip.io.framework_playground
                 new HealthCheckUIInstaller(services),
                 new AutoMapperInstaller<Startup>(services),
                 new FluentValidationInstaller<Startup>(services),
+                new EnviromentSecretsManagerInstaller(services),
                 new JwtAuthenticationInstaller(services),
                 new CQRSInstaller<Startup>(services),
                 new GlobalizationInstaller<Startup>(services),
