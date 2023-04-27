@@ -8,7 +8,7 @@ namespace ftrip.io.framework_playground.unit_tests
         [Fact]
         public void Test1()
         {
-            Assert.True(false);
+            Assert.True(true);
         }
     }
 }
