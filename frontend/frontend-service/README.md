@@ -1,1 +1,1 @@
-# frontend-service
+# frontend-playground
