@@ -9,10 +9,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "16.x"
-      - run: npm ci
-      - run: npm run format:check
-        env:
-          CI: true
-      - name: Build project
+      - working-directory: ./frontend/frontend-service
+        run: |
+          npm ci
+          npm run format:check
+      - working-directory: ./frontend/frontend-service
+        name: Build project
         if: github.event_name == 'push'
         run: npm run build
