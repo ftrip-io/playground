@@ -4,9 +4,10 @@ WORKDIR /build
 ARG CONFIGURATION=Release
 
 # Restore dependencies
-COPY ["ftrip.io.framework-playground/*.csproj", "ftrip.io.framework-playground/package*.json", "./ftrip.io.framework-playground/"]
 COPY ["ftrip.io.framework-playground.contracts/*.csproj", "ftrip.io.framework-playground.contracts/package*.json", "./ftrip.io.framework-playground.contracts/"]
+RUN dotnet restore /p:Configuration=$CONFIGURATION ftrip.io.framework-playground.contracts/ftrip.io.framework-playground.contracts.csproj
 
+COPY ["ftrip.io.framework-playground/*.csproj", "ftrip.io.framework-playground/package*.json", "./ftrip.io.framework-playground/"]
 RUN dotnet restore /p:Configuration=$CONFIGURATION ftrip.io.framework-playground/ftrip.io.framework-playground.csproj
 
 # Publish
