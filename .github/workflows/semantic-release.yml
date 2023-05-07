@@ -7,8 +7,14 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '18'
+          node-version: "18"
       - name: Release
+        id: semantic_release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
+      - name: log output
+        env:
+          OUTPUT: ${{ toJson(steps.semantic_release.outputs) }}
+        run: |
+          echo: "$OUTPUT"
