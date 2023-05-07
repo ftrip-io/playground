@@ -16,5 +16,5 @@ jobs:
       - name: log output
         env:
           OUTPUT: ${{ toJson(steps.semantic_release.outputs) }}
-        run: |
-          echo: "$OUTPUT"
+        shell: bash
+        run: echo $OUTPUT
