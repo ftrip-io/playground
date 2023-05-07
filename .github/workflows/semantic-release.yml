@@ -51,8 +51,10 @@ jobs:
           dotnet restore /p:Configuration=${{ env.CONFIGURATION }} ftrip.io.playground/ftrip.io.playground.sln
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v4
         with:
           context: "ftrip.io.playground"
           push: true
           tags: ftripio/playground-service:latest, ftripio/playground-service:${{ env.NEXT_VERSION }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
