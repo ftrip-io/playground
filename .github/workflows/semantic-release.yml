@@ -55,4 +55,4 @@ jobs:
         with:
           context: "ftrip.io.playground"
           push: true
-          tags: ftrip.io/playground-service:latest, ftrip.io/playground-service:${{ env.NEXT_VERSION }}
+          tags: ftripio/playground-service:latest, ftripio/playground-service:${{ env.NEXT_VERSION }}
