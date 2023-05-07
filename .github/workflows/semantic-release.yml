@@ -43,6 +43,6 @@ jobs:
         with:
           context: "ftrip.io.playground"
           push: true
-          tags: ftripio/playground-service:latest #, ftripio/playground-service:${{ env.NEXT_VERSION }}
+          tags: ftripio/playground-service:latest, ftripio/playground-service:${{ env.NEXT_VERSION }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
