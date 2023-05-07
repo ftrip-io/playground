@@ -9,7 +9,7 @@ COPY ftrip.io.framework-playground/package*.json ./ftrip.io.framework-playground
 COPY ftrip.io.framework-playground.contracts/package*.json ./ftrip.io.framework-playground.contracts
 
 # Restore dependencies
-RUN dotnet restore ftrip.io.framework-playground/ftrip.io.framework-playground.csproj
+RUN dotnet restore build/ftrip.io.framework-playground/ftrip.io.framework-playground.csproj
 
 # Copy everything else
 COPY . .
