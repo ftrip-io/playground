@@ -7,10 +7,6 @@ on:
 jobs:
   setup:
     runs-on: ubuntu-latest
-    env:
-      NUGET_PACKAGES: ${{ github.workspace }}/ftrip.io.playground/.nuget/packages
-      CONFIGURATION: Release
-
     steps:
       - uses: actions/checkout@v3
 
