@@ -2,7 +2,7 @@ name: Merge on develop
 on:
   push:
     branches:
-      - develop
+      - master
 
 jobs:
   setup:
