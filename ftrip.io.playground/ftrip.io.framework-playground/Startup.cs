@@ -9,9 +9,11 @@ using ftrip.io.framework.jobs.Installers;
 using ftrip.io.framework.Mapping;
 using ftrip.io.framework.messaging.Installers;
 using ftrip.io.framework.Persistence.NoSql.Mongodb.Installers;
+using ftrip.io.framework.Persistence.Sql.Mariadb;
 using ftrip.io.framework.Secrets;
 using ftrip.io.framework.Swagger;
 using ftrip.io.framework.Validation;
+using ftrip.io.framework_playground.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -35,24 +37,45 @@ namespace ftrip.io.framework_playground
         {
             services.AddControllers();
 
+            //InstallerCollection.With(
+            //    new SwaggerInstaller<Startup>(services),
+            //    new HealthCheckUIInstaller(services),
+            //    new AutoMapperInstaller<Startup>(services),
+            //    new FluentValidationInstaller<Startup>(services),
+            //    new EnviromentSecretsManagerInstaller(services),
+            //    new JwtAuthenticationInstaller(services),
+            //    new CQRSInstaller<Startup>(services),
+            //    new GlobalizationInstaller<Startup>(services),
+            //    new HangfireInstaller(services),
+
+            //    new MariadbInstaller<DatabaseContext>(services),
+            //    new MariadbHealthCheckInstaller(services)
+
+            ////new MongodbInstaller(services),
+            ////new MongodbHealthCheckInstaller(services),
+
+            ////new RabbitMQInstaller<Startup>(services, RabbitMQInstallerType.Publisher | RabbitMQInstallerType.Consumer)
+            //).Install();
+
+            if (Environment.GetEnvironmentVariable("IN_TEST_MODE") == null)
+            {
+                InstallerCollection.With(
+                    new SwaggerInstaller<Startup>(services),
+                    new HealthCheckUIInstaller(services),
+                    new EnviromentSecretsManagerInstaller(services),
+                    new JwtAuthenticationInstaller(services),
+                    new MariadbInstaller<DatabaseContext>(services),
+                    new MariadbHealthCheckInstaller(services),
+                    new RabbitMQInstaller<Startup>(services, RabbitMQInstallerType.Publisher | RabbitMQInstallerType.Consumer)
+                ).Install();
+            }
+
             InstallerCollection.With(
-                new SwaggerInstaller<Startup>(services),
-                new HealthCheckUIInstaller(services),
+                new HangfireInstaller(services),
+                new GlobalizationInstaller<Startup>(services),
                 new AutoMapperInstaller<Startup>(services),
                 new FluentValidationInstaller<Startup>(services),
-                new EnviromentSecretsManagerInstaller(services),
-                new JwtAuthenticationInstaller(services),
-                new CQRSInstaller<Startup>(services),
-                new GlobalizationInstaller<Startup>(services),
-                new HangfireInstaller(services),
-
-                //new MariadbInstaller<DatabaseContext>(services),
-                //new MariadbHealthCheckInstaller(services),
-
-                new MongodbInstaller(services),
-                new MongodbHealthCheckInstaller(services),
-
-                new RabbitMQInstaller<Startup>(services, RabbitMQInstallerType.Publisher | RabbitMQInstallerType.Consumer)
+                new CQRSInstaller<Startup>(services)
             ).Install();
         }
 

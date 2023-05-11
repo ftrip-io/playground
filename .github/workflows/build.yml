@@ -94,7 +94,7 @@ jobs:
             --no-build \
             --no-restore \
             -c ${{ env.CONFIGURATION }}
-          dotnet3 test ftrip.io.playground/ftrip.io.framework-playground.unit-tests/ftrip.io.framework-playground.unit-tests.csproj \
+          dotnet3 test ftrip.io.playground/ftrip.io.playground.sln \
             --no-build \
             --no-restore \
             -c ${{ env.CONFIGURATION }} \

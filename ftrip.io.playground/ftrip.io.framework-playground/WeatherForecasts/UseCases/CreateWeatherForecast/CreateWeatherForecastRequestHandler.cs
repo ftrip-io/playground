@@ -18,20 +18,20 @@ namespace ftrip.io.framework_playground.WeatherForecasts.UseCases.CreateWeatherF
         private readonly IRepository<WeatherForecast, Guid> _repository;
         private readonly IMapper _mapper;
 
-        private readonly IMessagePublisher _messagePublisher;
+        //private readonly IMessagePublisher _messagePublisher;
 
         public CreateWeatherForecastRecordRequestHandler(
             IUnitOfWork unitOfWork,
             IRepository<WeatherForecast, Guid> repository,
-            IMapper mapper,
+            IMapper mapper)
 
-            IMessagePublisher messagePublisher)
+        //IMessagePublisher messagePublisher)
         {
             _unitOfWork = unitOfWork;
             _repository = repository;
             _mapper = mapper;
 
-            _messagePublisher = messagePublisher;
+            //_messagePublisher = messagePublisher;
         }
 
         public async Task<WeatherForecast> Handle(CreateWeatherForecastRequest request, CancellationToken cancellationToken)
@@ -41,11 +41,11 @@ namespace ftrip.io.framework_playground.WeatherForecasts.UseCases.CreateWeatherF
             var weatherForecast = _mapper.Map<WeatherForecast>(request);
             var createdWeatherForecast = await _repository.Create(weatherForecast, cancellationToken);
 
-            await _messagePublisher.Send<WatherForecastCreated, string>(new WatherForecastCreated()
-            {
-                Id = weatherForecast.Id.ToString(),
-                Summary = weatherForecast.Summary
-            }, cancellationToken);
+            //await _messagePublisher.Send<WatherForecastCreated, string>(new WatherForecastCreated()
+            //{
+            //    Id = weatherForecast.Id.ToString(),
+            //    Summary = weatherForecast.Summary
+            //}, cancellationToken);
 
             await _unitOfWork.Commit();
 
