@@ -14,31 +14,6 @@ namespace ftrip.io.framework_playground.WeatherForecasts.UseCases.ReadWeatherFor
 
         public Task<WeatherForecast> Handle(ReadWeatherForecastRequest request, CancellationToken cancellationToken)
         {
-            if (request.Id == null)
-            {
-                return null;
-            }
-
-            if (request.Id == Guid.Empty)
-            {
-                return Task.FromResult(new WeatherForecast() { });
-            }
-
-            return Task.FromResult(new WeatherForecast()
-            {
-                Id = Guid.NewGuid(),
-                Active = true,
-                TemperatureC = 20
-            });
-        }
-
-        public Task<WeatherForecast> Handle2(ReadWeatherForecastRequest request, CancellationToken cancellationToken)
-        {
-            if (request.Id == null)
-            {
-                return null;
-            }
-
             if (request.Id == Guid.Empty)
             {
                 return Task.FromResult(new WeatherForecast() { });
