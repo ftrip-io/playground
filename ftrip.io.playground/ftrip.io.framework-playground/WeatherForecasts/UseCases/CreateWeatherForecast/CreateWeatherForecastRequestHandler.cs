@@ -7,6 +7,7 @@ using ftrip.io.framework_playground.WeatherForecasts.Domain;
 using MassTransit;
 using MediatR;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -39,6 +40,23 @@ namespace ftrip.io.framework_playground.WeatherForecasts.UseCases.CreateWeatherF
             await _unitOfWork.Begin();
 
             var weatherForecast = _mapper.Map<WeatherForecast>(request);
+            weatherForecast.WeatherForecastNestedSingle = new WeatherForecastNestedSingle()
+            {
+                Name = "TEST SINGLE"
+            };
+
+            weatherForecast.WeatherForecastNestedMultiples = new List<WeatherForecastNestedMultiple>()
+            {
+                new WeatherForecastNestedMultiple()
+                {
+                    Name = "TEST",
+                },
+                    new WeatherForecastNestedMultiple()
+                {
+                    Name = "TEST",
+                }
+            };
+
             var createdWeatherForecast = await _repository.Create(weatherForecast, cancellationToken);
 
             //await _messagePublisher.Send<WatherForecastCreated, string>(new WatherForecastCreated()

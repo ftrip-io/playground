@@ -5,6 +5,7 @@ using ftrip.io.framework_playground.WeatherForecasts.UseCases.DeleteWeatherForec
 using ftrip.io.framework_playground.WeatherForecasts.UseCases.UpdateWeatherForecast;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,18 +18,22 @@ namespace ftrip.io.framework_playground.WeatherForecasts
     {
         private readonly IRepository<WeatherForecast, Guid> _repository;
         private readonly IMediator _mediator;
+        private readonly ILogger _logger;
 
         public WeatherForecastController(
             IRepository<WeatherForecast, Guid> repository,
-            IMediator mediator)
+            IMediator mediator,
+            ILogger logger)
         {
             _repository = repository;
             _mediator = mediator;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<IActionResult> ReadAllAsync(CancellationToken cancellationToken = default)
         {
+            _logger.Information("Text pre {@Test} I posle", "Test");
             return Ok(await _repository.Read(cancellationToken));
         }
 
@@ -41,6 +46,7 @@ namespace ftrip.io.framework_playground.WeatherForecasts
         [HttpPost]
         public async Task<IActionResult> CreateAsync(CreateWeatherForecastRequest request, CancellationToken cancellationToken = default)
         {
+            _logger.Information("Text pre {@Test} I posle", "Test");
             return Ok(await _mediator.Send(request, cancellationToken));
         }
 

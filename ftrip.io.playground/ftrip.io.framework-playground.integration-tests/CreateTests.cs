@@ -15,7 +15,7 @@ namespace ftrip.io.framework_playground.integration_tests.Tests.Users
         }
 
         [Fact]
-        public async Task CreateUser_DuplicateUsername_ReturnsBadRequest()
+        public async Task CreateWeather_ReturnsOk()
         {
             // Arrange
             var request = new CreateWeatherForecastRequest()

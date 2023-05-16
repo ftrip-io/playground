@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using System;
 
 namespace ftrip.io.framework_playground
@@ -37,26 +38,6 @@ namespace ftrip.io.framework_playground
         {
             services.AddControllers();
 
-            //InstallerCollection.With(
-            //    new SwaggerInstaller<Startup>(services),
-            //    new HealthCheckUIInstaller(services),
-            //    new AutoMapperInstaller<Startup>(services),
-            //    new FluentValidationInstaller<Startup>(services),
-            //    new EnviromentSecretsManagerInstaller(services),
-            //    new JwtAuthenticationInstaller(services),
-            //    new CQRSInstaller<Startup>(services),
-            //    new GlobalizationInstaller<Startup>(services),
-            //    new HangfireInstaller(services),
-
-            //    new MariadbInstaller<DatabaseContext>(services),
-            //    new MariadbHealthCheckInstaller(services)
-
-            ////new MongodbInstaller(services),
-            ////new MongodbHealthCheckInstaller(services),
-
-            ////new RabbitMQInstaller<Startup>(services, RabbitMQInstallerType.Publisher | RabbitMQInstallerType.Consumer)
-            //).Install();
-
             if (Environment.GetEnvironmentVariable("IN_TEST_MODE") == null)
             {
                 InstallerCollection.With(
@@ -66,6 +47,8 @@ namespace ftrip.io.framework_playground
                     new JwtAuthenticationInstaller(services),
                     new MariadbInstaller<DatabaseContext>(services),
                     new MariadbHealthCheckInstaller(services),
+                    // new MongodbInstaller(services),
+                    // new MongodbHealthCheckInstaller(services),
                     new RabbitMQInstaller<Startup>(services, RabbitMQInstallerType.Publisher | RabbitMQInstallerType.Consumer)
                 ).Install();
             }
@@ -86,6 +69,8 @@ namespace ftrip.io.framework_playground
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSerilogRequestLogging();
 
             app.UseHttpsRedirection();
 
