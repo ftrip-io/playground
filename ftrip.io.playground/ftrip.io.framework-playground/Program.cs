@@ -7,7 +7,7 @@ using System;
 
 namespace ftrip.io.framework_playground
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {

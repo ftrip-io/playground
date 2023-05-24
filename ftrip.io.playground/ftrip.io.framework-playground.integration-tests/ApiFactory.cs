@@ -12,6 +12,7 @@ namespace ftrip.io.framework_playground.integration_tests
     public class ApiFactory : WebApplicationFactory<Startup>, IAsyncLifetime
     {
         protected readonly TestMariadbSettings _mariadbSettings;
+        protected readonly TestRabbitmqSettings _rabbitmqSettings;
 
         protected readonly TestContainersCollection _testContainers;
 
@@ -20,10 +21,12 @@ namespace ftrip.io.framework_playground.integration_tests
         public ApiFactory()
         {
             _mariadbSettings = new TestMariadbSettings();
+            _rabbitmqSettings = new TestRabbitmqSettings();
 
             _testContainers = new TestContainersCollection()
             {
-                TestContainers.BuildMariadbContainer(_mariadbSettings)
+                TestContainers.BuildMariadbContainer(_mariadbSettings),
+                TestContainers.BuildRabbitMqContainer(_rabbitmqSettings)
             };
         }
 
@@ -36,7 +39,9 @@ namespace ftrip.io.framework_playground.integration_tests
                 InstallerCollection.With(
                     new EnvironmentInstaller(),
                     new FakeJwtInstaller(services),
-                    new TestMariadbInstaller(services, _mariadbSettings)
+                    new TestMariadbInstaller(services, _mariadbSettings),
+                    new TestRabbitmqInstaller(services, _rabbitmqSettings),
+                    new TestTracerInstaller(services)
                 ).Install();
             });
         }

@@ -1,4 +1,5 @@
 using ftrip.io.framework.auth;
+using ftrip.io.framework.Correlation;
 using ftrip.io.framework.CQRS;
 using ftrip.io.framework.ExceptionHandling.Extensions;
 using ftrip.io.framework.Globalization;
@@ -8,10 +9,10 @@ using ftrip.io.framework.jobs.Extensions;
 using ftrip.io.framework.jobs.Installers;
 using ftrip.io.framework.Mapping;
 using ftrip.io.framework.messaging.Installers;
-using ftrip.io.framework.Persistence.NoSql.Mongodb.Installers;
 using ftrip.io.framework.Persistence.Sql.Mariadb;
 using ftrip.io.framework.Secrets;
 using ftrip.io.framework.Swagger;
+using ftrip.io.framework.Tracing;
 using ftrip.io.framework.Validation;
 using ftrip.io.framework_playground.Persistence;
 using Microsoft.AspNetCore.Builder;
@@ -49,7 +50,13 @@ namespace ftrip.io.framework_playground
                     new MariadbHealthCheckInstaller(services),
                     // new MongodbInstaller(services),
                     // new MongodbHealthCheckInstaller(services),
-                    new RabbitMQInstaller<Startup>(services, RabbitMQInstallerType.Publisher | RabbitMQInstallerType.Consumer)
+                    new RabbitMQInstaller<Startup>(services, RabbitMQInstallerType.Publisher | RabbitMQInstallerType.Consumer),
+                    new TracingInstaller(services, (tracingSettings) =>
+                    {
+                        tracingSettings.ApplicationLabel = "playground";
+                        tracingSettings.ApplicationVersion = GetType().Assembly.GetName().Version?.ToString() ?? "unknown";
+                        tracingSettings.MachineName = Environment.MachineName;
+                    })
                 ).Install();
             }
 
@@ -58,8 +65,11 @@ namespace ftrip.io.framework_playground
                 new GlobalizationInstaller<Startup>(services),
                 new AutoMapperInstaller<Startup>(services),
                 new FluentValidationInstaller<Startup>(services),
-                new CQRSInstaller<Startup>(services)
+                new CQRSInstaller<Startup>(services),
+                new CorrelationInstaller(services)
             ).Install();
+
+            services.AddHttpClient<UsersHttpClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -86,6 +96,7 @@ namespace ftrip.io.framework_playground
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseCorrelation();
             app.UseFtripioGlobalExceptionHandler();
             app.UseFtripionJobs<Startup>();
 

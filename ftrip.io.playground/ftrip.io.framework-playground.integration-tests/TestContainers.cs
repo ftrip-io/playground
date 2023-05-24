@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Testcontainers.MariaDb;
+using Testcontainers.RabbitMq;
 
 namespace ftrip.io.framework_playground.integration_tests
 {
@@ -16,6 +17,15 @@ namespace ftrip.io.framework_playground.integration_tests
                 .WithImage(settings.Image)
                 .WithPortBinding(int.Parse(settings.Port), MariaDbBuilder.MariaDbPort)
                 .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(MariaDbBuilder.MariaDbPort))
+                .Build();
+        }
+
+        public static RabbitMqContainer BuildRabbitMqContainer(TestRabbitmqSettings settings)
+        {
+            return new RabbitMqBuilder()
+                .WithImage(settings.Image)
+                .WithPortBinding(int.Parse(settings.Port), RabbitMqBuilder.RabbitMqPort)
+                .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(RabbitMqBuilder.RabbitMqPort))
                 .Build();
         }
     }
