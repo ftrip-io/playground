@@ -12,16 +12,16 @@ namespace ftrip.io.framework_playground.WeatherForecasts.UseCases.DeleteWeatherF
     public class DeleteWeatherForecastRequestHandler : IRequestHandler<DeleteWeatherForecastRequest, WeatherForecast>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IRepository<WeatherForecast, Guid> _repository;
+        private readonly IWeatherForecastRepository _weatherForecastRepository;
         private readonly IStringManager _stringManager;
 
         public DeleteWeatherForecastRequestHandler(
             IUnitOfWork unitOfWork,
-            IRepository<WeatherForecast, Guid> repository,
+            IWeatherForecastRepository weatherForecastRepository,
             IStringManager stringManager)
         {
             _unitOfWork = unitOfWork;
-            _repository = repository;
+            _weatherForecastRepository = weatherForecastRepository;
             _stringManager = stringManager;
         }
 
@@ -29,7 +29,7 @@ namespace ftrip.io.framework_playground.WeatherForecasts.UseCases.DeleteWeatherF
         {
             await _unitOfWork.Begin();
 
-            var deletedWeatherForecast = await _repository.Delete(request.Id, cancellationToken);
+            var deletedWeatherForecast = await _weatherForecastRepository.Delete(request.Id, cancellationToken);
             if (deletedWeatherForecast == null)
             {
                 await _unitOfWork.Rollback();

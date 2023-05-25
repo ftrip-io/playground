@@ -10,11 +10,13 @@ using ftrip.io.framework.jobs.Installers;
 using ftrip.io.framework.Mapping;
 using ftrip.io.framework.messaging.Installers;
 using ftrip.io.framework.Persistence.Sql.Mariadb;
+using ftrip.io.framework.Proxies;
 using ftrip.io.framework.Secrets;
 using ftrip.io.framework.Swagger;
 using ftrip.io.framework.Tracing;
 using ftrip.io.framework.Validation;
 using ftrip.io.framework_playground.Persistence;
+using ftrip.io.framework_playground.WeatherForecasts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -66,9 +68,11 @@ namespace ftrip.io.framework_playground
                 new AutoMapperInstaller<Startup>(services),
                 new FluentValidationInstaller<Startup>(services),
                 new CQRSInstaller<Startup>(services),
-                new CorrelationInstaller(services)
+                new CorrelationInstaller(services),
+                new ProxyGeneratorInstaller(services)
             ).Install();
 
+            services.AddProxiedScoped<IWeatherForecastRepository, WeatherForecastRepository>();
             services.AddHttpClient<UsersHttpClient>();
         }
 

@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using ftrip.io.framework.messaging.Publisher;
-using ftrip.io.framework.messaging.Settings;
 using ftrip.io.framework.Persistence.Contracts;
 using ftrip.io.framework_playground.contracts;
 using ftrip.io.framework_playground.WeatherForecasts.Domain;
-using MassTransit;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -16,19 +14,19 @@ namespace ftrip.io.framework_playground.WeatherForecasts.UseCases.CreateWeatherF
     public class CreateWeatherForecastRecordRequestHandler : IRequestHandler<CreateWeatherForecastRequest, WeatherForecast>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IRepository<WeatherForecast, Guid> _repository;
+        private readonly IWeatherForecastRepository _weatherForecastRepository;
         private readonly IMapper _mapper;
 
         private readonly IMessagePublisher _messagePublisher;
 
         public CreateWeatherForecastRecordRequestHandler(
             IUnitOfWork unitOfWork,
-            IRepository<WeatherForecast, Guid> repository,
+            IWeatherForecastRepository weatherForecastRepository,
             IMapper mapper,
             IMessagePublisher messagePublisher)
         {
             _unitOfWork = unitOfWork;
-            _repository = repository;
+            _weatherForecastRepository = weatherForecastRepository;
             _mapper = mapper;
 
             _messagePublisher = messagePublisher;
@@ -56,7 +54,7 @@ namespace ftrip.io.framework_playground.WeatherForecasts.UseCases.CreateWeatherF
                 }
             };
 
-            var createdWeatherForecast = await _repository.Create(weatherForecast, cancellationToken);
+            var createdWeatherForecast = await _weatherForecastRepository.Create(weatherForecast, cancellationToken);
 
             await _messagePublisher.Send<WatherForecastCreated, string>(new WatherForecastCreated()
             {

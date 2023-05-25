@@ -1,6 +1,7 @@
 ﻿using ftrip.io.framework.Correlation;
 using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace ftrip.io.framework_playground
 {
@@ -16,9 +17,9 @@ namespace ftrip.io.framework_playground
             client.DefaultRequestHeaders.Add(CorrelationConstants.HeaderAttriute, correlationContext.Id);
         }
 
-        public void GetUsers()
+        public async Task<string> GetUsers()
         {
-            _httpClient.GetStringAsync("api/users/" + Guid.NewGuid().ToString()).Wait();
+            return await _httpClient.GetStringAsync($"api/users/{Guid.NewGuid()}");
         }
     }
 }

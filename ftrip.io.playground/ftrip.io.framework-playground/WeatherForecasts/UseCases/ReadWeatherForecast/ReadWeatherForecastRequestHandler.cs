@@ -1,30 +1,23 @@
 ﻿using ftrip.io.framework_playground.WeatherForecasts.Domain;
 using MediatR;
-using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace ftrip.io.framework_playground.WeatherForecasts.UseCases.ReadWeatherForecast
 {
-    public class ReadWeatherForecastRequestHandler : IRequestHandler<ReadWeatherForecastRequest, WeatherForecast>
+    public class ReadWeatherForecastRequestHandler : IRequestHandler<ReadWeatherForecastRequest, IEnumerable<WeatherForecast>>
     {
-        public ReadWeatherForecastRequestHandler()
+        private readonly IWeatherForecastRepository _weatherForecastRepository;
+
+        public ReadWeatherForecastRequestHandler(IWeatherForecastRepository weatherForecastRepository)
         {
+            _weatherForecastRepository = weatherForecastRepository;
         }
 
-        public Task<WeatherForecast> Handle(ReadWeatherForecastRequest request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<WeatherForecast>> Handle(ReadWeatherForecastRequest request, CancellationToken cancellationToken)
         {
-            if (request.Id == Guid.Empty)
-            {
-                return Task.FromResult(new WeatherForecast() { });
-            }
-
-            return Task.FromResult(new WeatherForecast()
-            {
-                Id = Guid.NewGuid(),
-                Active = true,
-                TemperatureC = 20
-            });
+            return await _weatherForecastRepository.Read(cancellationToken);
         }
     }
 }

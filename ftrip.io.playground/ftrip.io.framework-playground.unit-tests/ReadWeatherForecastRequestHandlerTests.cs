@@ -1,4 +1,7 @@
-﻿using ftrip.io.framework_playground.WeatherForecasts.UseCases.ReadWeatherForecast;
+﻿using ftrip.io.framework_playground.WeatherForecasts;
+using ftrip.io.framework_playground.WeatherForecasts.UseCases.ReadByIdWeatherForecast;
+using ftrip.io.framework_playground.WeatherForecasts.UseCases.ReadWeatherForecast;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,7 +20,7 @@ namespace ftrip.io.framework_playground.unit_tests
         [Fact]
         public void ReadWeatherForecastRequestHandler_Constructor()
         {
-            var handler = new ReadWeatherForecastRequestHandler();
+            var handler = new ReadByIdWeatherForecastRequest();
 
             Assert.NotNull(handler);
         }
@@ -25,14 +28,16 @@ namespace ftrip.io.framework_playground.unit_tests
         [Fact]
         public async Task ReadWeatherForecastRequestHandler_HandleAsync()
         {
-            var handler = new ReadWeatherForecastRequestHandler();
+            var repositoryMock = new Mock<IWeatherForecastRepository>();
 
-            var weatherForecast = await handler.Handle(new ReadWeatherForecastRequest()
+            var handler = new ReadByIdWeatherForecastRequestHandler(repositoryMock.Object);
+
+            var weatherForecast = await handler.Handle(new ReadByIdWeatherForecastRequest()
             {
                 Id = Guid.NewGuid()
             }, CancellationToken.None);
 
-            Assert.NotNull(weatherForecast);
+            Assert.Null(weatherForecast);
         }
     }
 }
