@@ -27,7 +27,7 @@ const upload = multer({ storage: multerStorage });
 
 app.use(express.json()).use("/images", express.static(imagesDir));
 
-app.pos(
+app.post(
   "/api/images/:groupName",
   authorize,
   upload.array("images", 50),
@@ -58,7 +58,7 @@ app.get("/api/images/:groupName", async (req, res) => {
   res.json(imageUrls);
 });
 
-app.get("/", async (_, res) => {
+app.get("/aa", async (_, res) => {
   res.send("Image server");
 });
 
