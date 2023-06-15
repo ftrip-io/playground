@@ -58,7 +58,7 @@ app.get("/api/images/:groupName", async (req, res) => {
   res.json(imageUrls);
 });
 
-app.get("/aa", async (_, res) => {
+app.get("/", async (_, res) => {
   res.send("Image server");
 });
 
