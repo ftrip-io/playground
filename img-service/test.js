@@ -5,7 +5,12 @@ let serverProcess;
 
 const startServer = () => {
   return new Promise((resolve, reject) => {
-    serverProcess = spawn("node", ["server.js"]);
+    serverProcess = spawn("node", [
+      "--experimental-modules",
+      "-r",
+      "dotenv/config",
+      "server.js",
+    ]);
 
     serverProcess.stdout.on("data", (data) => {
       console.log(data.toString());
