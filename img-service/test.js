@@ -40,7 +40,7 @@ const checkServerRunning = async () => {
     request({
       method: "GET",
       hostname: "localhost",
-      port: process.env.PORT,
+      port: process.env.PORT || 3000,
     })
       .on("response", resolve)
       .on("error", reject)
