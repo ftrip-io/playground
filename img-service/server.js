@@ -94,9 +94,11 @@ app.put("/api/images/:groupName", authorize, async (req, res) => {
   res.json(imageUrls);
 });
 
-app.listen(process.env.PORT || 80, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log(
-    `⚡️[server]: Server running at http://localhost:${process.env.PORT || 80}`
+    `⚡️[server]: Server running at http://localhost:${
+      process.env.PORT || 3000
+    }`
   );
 });
 
