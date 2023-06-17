@@ -81,6 +81,14 @@ jobs:
           dockerfile: ftrip.io.playground/Dockerfile
           output-file: hadolint-output
 
+      - name: Upload Hadolint artifact
+        # if: steps.hadolint.conclusion == 'failure'
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: Hadolint Output
+          path: hadolint-output
+
       - name: Build, Analyze and Generate Code Coverage
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -134,10 +142,3 @@ jobs:
         with:
           name: Code Coverage
           path: code-coverage
-
-      - name: Upload Hadolint artifact
-        if: steps.hadolint.conclusion == 'failure'
-        uses: actions/upload-artifact@v3
-        with:
-          name: Hadolint Output
-          path: hadolint-output
