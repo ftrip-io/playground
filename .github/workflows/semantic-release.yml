@@ -10,24 +10,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-
-      - name: Get next semantic version
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "NEXT_VERSION=$(npx semantic-release --dry-run | grep 'The next release version is' | sed -E 's/.* ([[:digit:].]+)$/\1/')" >> $GITHUB_ENV
-
-      - name: Create a new Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
+      - uses: ftrip-io/github-ci/semantic-release@3a7719a85aed0b8838d66ab5b132dd7144414fb7
+        id: semantic-release
 
       - uses: ftrip-io/github-ci/build-and-push-to-dockerhub@ef2fd6ac85fe9e0ae63e5979a82a35bd5075bc33
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
           context: "ftrip.io.playground"
-          tags: ftripio/playground-service:latest, ftripio/playground-service:${{ env.NEXT_VERSION }}
+          tags: ftripio/playground-service:latest, ftripio/playground-service:${{ steps.semantic-release.outputs.next-version }}
