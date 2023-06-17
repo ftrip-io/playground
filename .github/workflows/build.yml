@@ -76,6 +76,7 @@ jobs:
           dotnet restore /p:Configuration=${{ env.CONFIGURATION }} ftrip.io.playground/ftrip.io.playground.sln
 
       - uses: hadolint/hadolint-action@v3.1.0
+        id: hadolint
         with:
           dockerfile: ftrip.io.playground/Dockerfile
           output-file: hadolint-output
@@ -135,6 +136,7 @@ jobs:
           path: code-coverage
 
       - name: Upload Hadolint artifact
+        if: steps.hadolint.conclusion == 'failure'
         uses: actions/upload-artifact@v3
         with:
           name: Hadolint Output
