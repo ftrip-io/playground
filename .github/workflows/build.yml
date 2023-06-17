@@ -75,48 +75,9 @@ jobs:
         run: |
           dotnet restore /p:Configuration=${{ env.CONFIGURATION }} ftrip.io.playground/ftrip.io.playground.sln
 
-      - uses: ftrip-io/github-ci/hadolint@20a6a90c6bf2fe3806d4643438f75c2779d688a9
+      - uses: ftrip-io/github-ci/hadolint@hadolint
         with:
           dockerfile: ftrip.io.playground/Dockerfile
-
-      # - uses: hadolint/hadolint-action@v3.1.0
-      #   id: hadolint
-      #   with:
-      #     dockerfile: ftrip.io.playground/Dockerfile
-      #     output-file: hadolint-output
-
-      # - name: Upload Hadolint artifact
-      #   if: failure()
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: Hadolint Output
-      #     path: hadolint-output
-
-      # - name: Update Pull Request
-      #   uses: actions/github-script@v6
-      #   if: github.event_name == 'pull_request' && failure()
-      #   with:
-      #     script: |
-      #       const output = `
-      #       #### Hadolint: \`${{ steps.hadolint.outcome }}\`
-      #       \`\`\`
-      #       ${process.env.HADOLINT_RESULTS}
-      #       \`\`\`
-      #       `;
-
-      #       github.rest.issues.createComment({
-      #         issue_number: context.issue.number,
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         body: output
-      #       })
-
-      - name: Upload Hadolint PR artifact
-        if: failure()
-        uses: actions/upload-artifact@v3
-        with:
-          name: Hadolint Output
-          path: hadolint-output
 
       - name: Build, Analyze and Generate Code Coverage
         env:
