@@ -75,6 +75,11 @@ jobs:
         run: |
           dotnet restore /p:Configuration=${{ env.CONFIGURATION }} ftrip.io.playground/ftrip.io.playground.sln
 
+      - uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: ftrip.io.playground/Dockerfile
+          output-file: hadolint-output
+
       - name: Build, Analyze and Generate Code Coverage
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -128,3 +133,9 @@ jobs:
         with:
           name: Code Coverage
           path: code-coverage
+
+      - name: Upload Hadolint artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Hadolint Output
+          path: hadolint-output
