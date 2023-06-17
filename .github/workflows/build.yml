@@ -88,6 +88,32 @@ jobs:
           name: Hadolint Output
           path: hadolint-output
 
+      - name: Update Pull Request
+        uses: actions/github-script@v6
+        if: github.event_name == 'pull_request'
+        with:
+          script: |
+            const output = `
+            #### Hadolint: \`${{ steps.hadolint.outcome }}\`
+            \`\`\`
+            ${process.env.HADOLINT_RESULTS}
+            \`\`\`
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+
+      - name: Upload Hadolint PR artifact
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: Hadolint Output
+          path: hadolint-output
+
       - name: Build, Analyze and Generate Code Coverage
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
