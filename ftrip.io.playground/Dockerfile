@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
 WORKDIR /build
 
 ARG CONFIGURATION=Release
@@ -11,12 +11,12 @@ COPY ["ftrip.io.framework-playground/*.csproj", "ftrip.io.framework-playground/p
 RUN dotnet restore /p:Configuration=$CONFIGURATION ftrip.io.framework-playground/ftrip.io.framework-playground.csproj
 
 # Publish
-COPY . .
+COPY . . 
 
 RUN dotnet publish -c $CONFIGURATION -o out ftrip.io.framework-playground/ftrip.io.framework-playground.csproj
  
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine AS final
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine 
 WORKDIR /app
 
 COPY --from=build /build/out .
