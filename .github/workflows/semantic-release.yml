@@ -10,8 +10,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: ftrip-io/github-ci/semantic-release@3a7719a85aed0b8838d66ab5b132dd7144414fb7
+      - uses: ftrip-io/github-ci/semantic-release@4610c0e6fe4547dca5e76a74eb581cafcf50d322
         id: semantic-release
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: ftrip-io/github-ci/build-and-push-to-dockerhub@ef2fd6ac85fe9e0ae63e5979a82a35bd5075bc33
         with:
