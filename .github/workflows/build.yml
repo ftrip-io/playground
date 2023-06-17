@@ -75,7 +75,7 @@ jobs:
         run: |
           dotnet restore /p:Configuration=${{ env.CONFIGURATION }} ftrip.io.playground/ftrip.io.playground.sln
 
-      - uses: ftrip-io/github-ci/hadolint@20a6a90
+      - uses: ftrip-io/github-ci/hadolint@20a6a90c6bf2fe3806d4643438f75c2779d688a9
         with:
           dockerfile: ftrip.io.playground/Dockerfile
 
