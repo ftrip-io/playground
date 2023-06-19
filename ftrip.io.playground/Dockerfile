@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine as build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine as build2
 WORKDIR /build
 
 ARG CONFIGURATION=Release
