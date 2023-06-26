@@ -17,4 +17,4 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
           cache: true
-          cache_registry: aevea/cache
+          cache_registry: ftripio/playground-service-cache
